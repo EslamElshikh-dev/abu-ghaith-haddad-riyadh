@@ -1,0 +1,11 @@
+{
+  "name": "أبو غيث حداد مظلات وساندوتش بانل",
+  "short_name": "أبو غيث",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111315",
+  "theme_color": "#111315",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
