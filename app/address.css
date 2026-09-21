@@ -1,0 +1,49 @@
+.utility-location {
+  direction: rtl !important;
+}
+
+.location-action {
+  max-width: 25rem;
+  text-align: right;
+}
+
+.location-action address {
+  margin: 0.45rem 0 0.8rem;
+  color: #fff;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.75;
+}
+
+.location-action > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  direction: rtl !important;
+  color: var(--accent);
+  font-size: 0.82rem !important;
+  font-weight: 900;
+}
+
+.location-action > a svg {
+  width: 1.15rem;
+}
+
+.service-location-link {
+  display: block;
+  margin-top: 0.9rem;
+  text-align: center;
+  color: var(--accent2);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.footer-bottom address {
+  font-style: normal;
+}
+
+@media (max-width: 820px) {
+  .location-action {
+    max-width: none;
+  }
+}
