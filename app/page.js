@@ -1,21 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowIcon, CheckIcon, PhoneIcon, WhatsappIcon, PinIcon, ShieldIcon } from '@/components/SiteChrome';
-import { site, services, realPhotos, homeFaq, whatsappUrl } from '@/lib/site';
+import { site, services, realPhotos, homeFaq, whatsappUrl, businessPostalAddress, businessOpeningHours } from '@/lib/site';
 
 export const metadata = {
-  title: 'أبو غيث حداد مظلات وساندوتش بانل بالرياض',
+  title: 'أبو غيث حداد أبواب ونوافذ بالرياض',
   description: site.description,
-  keywords: ['حداد بالرياض', 'حداد مظلات بالرياض', 'تركيب ساندوتش بانل بالرياض', 'تفصيل مظلات سيارات', 'تفصيل سواتر بالرياض', 'بوابات حديد بالرياض', 'هياكل معدنية بالرياض'],
+  keywords: ['حداد أبواب ونوافذ بالرياض', 'حداد بالرياض', 'أبواب حديد بالرياض', 'نوافذ حديد بالرياض', 'حداد مظلات بالرياض', 'تركيب ساندوتش بانل بالرياض', 'تفصيل سواتر بالرياض', 'بوابات حديد بالرياض', 'هياكل معدنية بالرياض'],
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'أبو غيث حداد مظلات وساندوتش بانل بالرياض',
+    title: 'أبو غيث حداد أبواب ونوافذ بالرياض',
     description: site.description,
     url: '/',
     images: [{ url: '/images/abu-ghaith-hilux-service-vehicle-03.webp', width: 1536, height: 864, alt: realPhotos[2].alt }]
   },
   twitter: {
-    title: 'أبو غيث حداد مظلات وساندوتش بانل بالرياض',
+    title: 'أبو غيث حداد أبواب ونوافذ بالرياض',
     description: site.description,
     images: ['/images/abu-ghaith-hilux-service-vehicle-03.webp']
   }
@@ -53,6 +53,9 @@ function businessSchema() {
         description: site.description,
         url: site.url,
         telephone: site.phone,
+        address: businessPostalAddress,
+        hasMap: site.mapsUrl,
+        openingHoursSpecification: businessOpeningHours,
         image: [
           `${site.url}/images/car-shade-riyadh.webp`,
           ...realPhotos.map((p) => `${site.url}${p.src}`)
@@ -96,7 +99,7 @@ function businessSchema() {
         '@type': 'WebPage',
         '@id': `${site.url}/#webpage`,
         url: site.url,
-        name: 'أبو غيث حداد مظلات وساندوتش بانل بالرياض',
+        name: 'أبو غيث حداد أبواب ونوافذ بالرياض',
         description: site.description,
         isPartOf: { '@id': `${site.url}/#website` },
         about: { '@id': `${site.url}/#business` },
@@ -201,8 +204,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="local-section">
-        <div className="shell local-card"><div><span className="kicker light">خدمة محلية بالرياض</span><h2>عندك موقع وتحتاج حداد؟ أرسل الصورة والمقاس.</h2><p>أرسل الحي ونوع الخدمة وصورة واضحة للمكان والمقاسات التقريبية، وسنبدأ من المعلومات التي تساعد على تحديد نطاق العمل الصحيح.</p></div><div className="local-action"><span>اتصال مباشر</span><a href={`tel:${site.phone}`}>{site.phoneDisplay}</a><small>أبو غيث — الرياض</small></div></div>
+      <section className="local-section" id="location">
+        <div className="shell local-card"><div><span className="kicker light">موقع أبو غيث في الرياض</span><h2>موقع فعلي في حي المصيف وخدمة ميدانية لجميع أحياء الرياض.</h2><p>يمكنك فتح نقطة الموقع مباشرة على خرائط Google، ولطلب تنفيذ في موقعك أرسل الحي ونوع الخدمة وصورة واضحة والمقاسات التقريبية.</p></div><div className="local-action location-action"><span>العنوان</span><address>{site.address.full}</address><a href={site.mapsUrl} target="_blank" rel="noopener noreferrer"><PinIcon /> فتح الموقع على خرائط Google</a><small>الهاتف: {site.phoneDisplay}</small></div></div>
       </section>
 
       <section className="section faq-section">
