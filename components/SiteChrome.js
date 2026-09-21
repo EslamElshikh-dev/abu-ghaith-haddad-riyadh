@@ -53,7 +53,7 @@ export function Brand({ footer = false }) {
   return (
     <Link className={`brand${footer ? ' footer-brand' : ''}`} href="/" aria-label="أبو غيث - الصفحة الرئيسية">
       <span className="brand-mark" aria-hidden="true">غ</span>
-      <span className="brand-copy"><strong>أبو غيث</strong><small>حداد مظلات وساندوتش بانل</small></span>
+      <span className="brand-copy"><strong>أبو غيث</strong><small>حداد أبواب ونوافذ بالرياض</small></span>
     </Link>
   );
 }
@@ -62,7 +62,7 @@ export function Header() {
   return (
     <>
       <a className="skip-link" href="#main-content">انتقل إلى المحتوى</a>
-      <div className="utility-bar"><div className="shell utility-inner"><span>نخدم جميع أحياء مدينة الرياض</span><a href={`tel:${site.phone}`} aria-label={`اتصل على ${site.phoneDisplay}`}>{site.phoneDisplay}</a></div></div>
+      <div className="utility-bar"><div className="shell utility-inner"><a className="utility-location" href={site.mapsUrl} target="_blank" rel="noopener noreferrer">حي المصيف، الرياض</a><a href={`tel:${site.phone}`} aria-label={`اتصل على ${site.phoneDisplay}`}>{site.phoneDisplay}</a></div></div>
       <header className="site-header">
         <div className="shell header-inner">
           <Brand />
@@ -84,9 +84,9 @@ export function Footer() {
         <div className="footer-intro"><Brand footer /><p>تفصيل وتركيب أعمال الحدادة والمظلات والسواتر والساندوتش بانل والهياكل المعدنية داخل مدينة الرياض.</p><p className="footer-proof">صور سيارة ومعدات الخدمة المعروضة بالموقع صور فعلية من الميدان.</p></div>
         <div><h2 className="footer-heading">الخدمات</h2><ul className="footer-links">{services.slice(0, 4).map((s) => <li key={s.slug}><Link href={`/services/${s.slug}`}>{s.label}</Link></li>)}</ul></div>
         <div><h2 className="footer-heading">خدمات إضافية</h2><ul className="footer-links">{services.slice(4).map((s) => <li key={s.slug}><Link href={`/services/${s.slug}`}>{s.label}</Link></li>)}</ul></div>
-        <div><h2 className="footer-heading">تواصل الآن</h2><div className="footer-contact"><a href={`tel:${site.phone}`}><PhoneIcon /><span>اتصال مباشر<strong>{site.phoneDisplay}</strong></span></a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><WhatsappIcon /><span>إرسال التفاصيل<strong>عبر واتساب</strong></span></a></div></div>
+        <div><h2 className="footer-heading">تواصل الآن</h2><div className="footer-contact"><a href={`tel:${site.phone}`}><PhoneIcon /><span>اتصال مباشر<strong>{site.phoneDisplay}</strong></span></a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><WhatsappIcon /><span>إرسال التفاصيل<strong>عبر واتساب</strong></span></a><a href={site.mapsUrl} target="_blank" rel="noopener noreferrer"><PinIcon /><span>موقع النشاط<strong>{site.address.short}</strong></span></a></div></div>
       </div>
-      <div className="shell footer-bottom"><p>© 2026 أبو غيث. جميع الحقوق محفوظة.</p><p>نطاق الخدمة: مدينة الرياض</p></div>
+      <div className="shell footer-bottom"><p>© 2026 أبو غيث. جميع الحقوق محفوظة.</p><address>{site.address.full}</address></div>
     </footer>
   );
 }
