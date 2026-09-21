@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowIcon, CheckIcon, PhoneIcon, WhatsappIcon } from '@/components/SiteChrome';
-import { site, services, getService, whatsappUrl, realPhotos } from '@/lib/site';
+import { site, services, getService, whatsappUrl, realPhotos, businessPostalAddress, businessOpeningHours } from '@/lib/site';
 
 export function generateStaticParams() {
   return services.map(({ slug }) => ({ slug }));
@@ -48,6 +48,9 @@ function schemaFor(service) {
         description: site.description,
         url: site.url,
         telephone: site.phone,
+        address: businessPostalAddress,
+        hasMap: site.mapsUrl,
+        openingHoursSpecification: businessOpeningHours,
         image: [`${site.url}${service.image}`, ...realPhotos.map((p) => `${site.url}${p.src}`)],
         areaServed: area,
         contactPoint: { '@type': 'ContactPoint', telephone: site.phone, contactType: 'customer service', availableLanguage: ['ar'], areaServed: 'SA' }
@@ -105,7 +108,7 @@ export default async function ServicePage({ params }) {
 
       <section className="section service-content-section"><div className="shell service-content-grid">
         <article className="service-article"><span className="kicker">تفاصيل الخدمة</span><h2>{service.label} حسب مساحة الموقع والاستخدام</h2>{service.paragraphs.map((p) => <p key={p}>{p}</p>)}<div className="feature-panel"><h2>ما الذي يشمله التخطيط للتنفيذ؟</h2><ul>{service.benefits.map((benefit) => <li key={benefit}><CheckIcon />{benefit}</li>)}</ul></div></article>
-        <aside className="contact-card"><span>اطلب الخدمة</span><h2>أرسل المقاس أو صورة الموقع</h2><p>اذكر الحي، نوع الخدمة، المقاسات التقريبية، والشكل المطلوب لبدء مناقشة التفاصيل.</p><a className="button button-whatsapp full-button" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><WhatsappIcon className="button-icon" /> واتساب {site.phoneDisplay}</a><a className="button button-dark full-button" href={`tel:${site.phone}`}><PhoneIcon className="button-icon" /> اتصال مباشر</a><small>نطاق الخدمة: مدينة الرياض</small></aside>
+        <aside className="contact-card"><span>اطلب الخدمة</span><h2>أرسل المقاس أو صورة الموقع</h2><p>اذكر الحي، نوع الخدمة، المقاسات التقريبية، والشكل المطلوب لبدء مناقشة التفاصيل.</p><a className="button button-whatsapp full-button" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><WhatsappIcon className="button-icon" /> واتساب {site.phoneDisplay}</a><a className="button button-dark full-button" href={`tel:${site.phone}`}><PhoneIcon className="button-icon" /> اتصال مباشر</a><a className="service-location-link" href={site.mapsUrl} target="_blank" rel="noopener noreferrer">الموقع: {site.address.short}</a><small>نطاق الخدمة: مدينة الرياض</small></aside>
       </div></section>
 
       <section className="section service-process"><div className="shell"><div className="section-heading compact-heading"><div><span className="kicker">خطوات التنفيذ</span><h2>مسار واضح من الفكرة إلى التشطيب</h2></div></div><ol className="process-grid"><li><span>01</span><h3>معاينة الأبعاد والاستخدام</h3></li><li><span>02</span><h3>تحديد الشكل والخامة</h3></li><li><span>03</span><h3>التفصيل والتجهيز</h3></li><li><span>04</span><h3>التركيب ومراجعة التشطيب</h3></li></ol></div></section>
