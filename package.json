@@ -8,8 +8,13 @@
     "start": "next start",
     "prebuild": "node scripts/fetch-existing-assets.mjs"
   },
+  "overrides": {
+    "next": {
+      "sharp": "0.35.5"
+    }
+  },
   "dependencies": {
-    "next": "15.5.9",
+    "next": "15.5.28",
     "react": "19.1.1",
     "react-dom": "19.1.1"
   }
