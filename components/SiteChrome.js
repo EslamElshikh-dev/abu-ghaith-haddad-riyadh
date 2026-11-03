@@ -1,3 +1,4 @@
+import { EslamDeveloperSignature } from "./eslam-developer-credit";
 import Link from 'next/link';
 import { site, services, whatsappUrl } from '@/lib/site';
 
@@ -87,7 +88,7 @@ export function Footer() {
         <div><h2 className="footer-heading">تواصل الآن</h2><div className="footer-contact"><a href={`tel:${site.phone}`}><PhoneIcon /><span>اتصال مباشر<strong>{site.phoneDisplay}</strong></span></a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><WhatsappIcon /><span>إرسال التفاصيل<strong>عبر واتساب</strong></span></a><a href={site.mapsUrl} target="_blank" rel="noopener noreferrer"><PinIcon /><span>موقع النشاط<strong>{site.address.short}</strong></span></a></div></div>
       </div>
       <div className="shell footer-bottom"><p>© 2026 أبو غيث. جميع الحقوق محفوظة.</p><address>{site.address.full}</address></div>
-    </footer>
+    <div className="eslam-credit-slot"><EslamDeveloperSignature /></div></footer>
   );
 }
 

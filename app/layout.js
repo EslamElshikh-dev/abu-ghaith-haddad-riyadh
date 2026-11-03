@@ -7,7 +7,7 @@ export const metadata = {
   metadataBase: new URL(site.url),
   applicationName: site.name,
   authors: [{ name: site.name }],
-  creator: site.name,
+  creator: "المهندس إسلام الشيخ",
   publisher: site.name,
   category: 'خدمات حدادة ومظلات',
   robots: {
