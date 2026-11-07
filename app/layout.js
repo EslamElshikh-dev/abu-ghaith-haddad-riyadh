@@ -1,10 +1,13 @@
 import './globals.css';
 import './address.css';
+import './enhancements.css';
 import { Header, Footer, FloatingActions } from '@/components/SiteChrome';
 import { site } from '@/lib/site';
 
 export const metadata = {
   metadataBase: new URL(site.url),
+  title: { default: site.name, template: `%s | ${site.name}` },
+  description: site.description,
   applicationName: site.name,
   authors: [{ name: site.name }],
   creator: "المهندس إسلام الشيخ",

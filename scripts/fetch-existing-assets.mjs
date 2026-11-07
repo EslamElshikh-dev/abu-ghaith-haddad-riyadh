@@ -6,15 +6,26 @@ const outDir = join(root, 'public', 'images');
 const b64Dir = join(root, 'assets-b64');
 await mkdir(outDir, { recursive: true });
 
+function validateWebp(bytes, name) {
+  if (bytes.length < 1000 || bytes.toString('ascii', 0, 4) !== 'RIFF' || bytes.toString('ascii', 8, 12) !== 'WEBP' || bytes.readUInt32LE(4) + 8 !== bytes.length) {
+    throw new Error(`Invalid or truncated WebP asset: ${name}`);
+  }
+}
+
+async function hasValidAsset(path, name) {
+  try { await access(path); } catch (error) { if (error.code === 'ENOENT') return false; throw error; }
+  validateWebp(await readFile(path), name);
+  return true;
+}
+
 const embeddedAssets = [
-  'abu-ghaith-hilux-service-vehicle-03.webp',
   'abu-ghaith-service-vehicle-sign-02.webp',
   'abu-ghaith-truck-equipment-01.webp'
 ];
 
 for (const name of embeddedAssets) {
   const target = join(outDir, name);
-  try { await access(target); continue; } catch {}
+  if (await hasValidAsset(target, name)) continue;
   const stem = name.replace(/\.webp$/i, '');
   const entries = (await readdir(b64Dir))
     .filter((entry) => entry.startsWith(`${stem}.part`) && entry.endsWith('.b64'))
@@ -22,7 +33,7 @@ for (const name of embeddedAssets) {
   if (!entries.length) throw new Error(`Missing embedded image chunks for ${name}`);
   const parts = await Promise.all(entries.map((entry) => readFile(join(b64Dir, entry), 'utf8')));
   const bytes = Buffer.from(parts.join(''), 'base64');
-  if (bytes.length < 1000) throw new Error(`Invalid embedded image: ${name}`);
+  validateWebp(bytes, name);
   await writeFile(target, bytes);
   console.log(`decoded ${name}: ${bytes.length} bytes`);
 }
@@ -35,14 +46,14 @@ const remoteAssets = [
 
 for (const name of remoteAssets) {
   const target = join(outDir, name);
-  try { await access(target); continue; } catch {}
+  if (await hasValidAsset(target, name)) continue;
   let lastError;
   for (let attempt = 1; attempt <= 3; attempt += 1) {
     try {
       const response = await fetch(`${base}/${name}`, { headers: { 'user-agent': 'AbuGhaith-Vercel-Build/1.0' }, redirect: 'follow' });
       if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
       const bytes = Buffer.from(await response.arrayBuffer());
-      if (bytes.length < 1000) throw new Error(`unexpectedly small file: ${bytes.length}`);
+      validateWebp(bytes, name);
       await writeFile(target, bytes);
       lastError = undefined;
       console.log(`fetched ${name}: ${bytes.length} bytes`);

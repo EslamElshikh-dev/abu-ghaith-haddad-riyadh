@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "node --test scripts/structured-data.test.mjs",
+    "pretest": "node scripts/fetch-existing-assets.mjs",
     "prebuild": "node scripts/fetch-existing-assets.mjs"
   },
   "dependencies": {
