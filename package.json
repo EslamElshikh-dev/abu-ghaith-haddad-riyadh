@@ -6,15 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "node --test scripts/structured-data.test.mjs",
+    "pretest": "node scripts/fetch-existing-assets.mjs",
     "prebuild": "node scripts/fetch-existing-assets.mjs"
   },
   "overrides": {
     "next": {
-      "sharp": "0.35.5"
+      "sharp": "0.35.5",
+      "postcss": "8.5.23"
     }
   },
   "dependencies": {
-    "next": "15.5.28",
+    "next": "15.5.29",
     "react": "19.1.1",
     "react-dom": "19.1.1"
   }
