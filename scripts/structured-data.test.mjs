@@ -15,7 +15,7 @@ function walk(value, visit) {
 }
 
 test('every page has one consistent business and website identity', () => {
-  assert.equal(site.name, 'أبو غيث حداد ابواب ونوافذ ساندويتش بانل');
+  assert.equal(site.name, 'أبو غيث حداد أبواب ونوافذ وسندوتش بانل');
   assert.ok(site.description.startsWith(site.name));
   for (const data of graphs) {
     const businesses = nodesOfType(data, 'HomeAndConstructionBusiness');

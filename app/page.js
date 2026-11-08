@@ -18,8 +18,8 @@ export default function HomePage() {
       <section className="hero">
         <div className="shell hero-grid">
           <div className="hero-copy animate-in">
-            <span className="eyebrow"><span aria-hidden="true" />{site.name}</span>
-            <h1>تفصيل حديد <em>يناسب موقعك</em> من أول مقاس حتى التركيب</h1>
+            <span className="eyebrow"><span aria-hidden="true" />تفصيل حديد يناسب موقعك من أول مقاس حتى التركيب</span>
+            <h1>{site.shortName} <em>{site.name.slice(site.shortName.length).trim()}</em></h1>
             <p className="hero-lead">أبو غيث لأعمال المظلات والسواتر والساندويتش بانل والأبواب والهياكل المعدنية، بخدمة ميدانية تغطي مدينة الرياض.</p>
             <div className="hero-actions">
               <a className="button button-primary" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><WhatsappIcon className="button-icon" /> أرسل صورة الموقع</a>
