@@ -68,10 +68,10 @@ export function Header() {
         <div className="shell header-inner">
           <Brand />
           <nav className="desktop-nav" aria-label="التنقل الرئيسي">
-            <Link href="/">الرئيسية</Link><Link href="/services">الخدمات</Link><Link href="/#real-work">صور فعلية</Link><Link href="/#work-method">طريقة العمل</Link><Link href="/#about">عن أبو غيث</Link>
+            <Link href="/">الرئيسية</Link><Link href="/services">الخدمات</Link><Link href="/blog">المدونة</Link><Link href="/#real-work">صور فعلية</Link><Link href="/#work-method">طريقة العمل</Link><Link href="/#about">عن أبو غيث</Link>
           </nav>
           <a className="header-call" href={`tel:${site.phone}`} aria-label={`اتصل الآن على ${site.phoneDisplay}`}><PhoneIcon /><span><small>اتصل مباشرة</small>{site.phoneDisplay}</span></a>
-          <details className="mobile-menu"><summary aria-label="فتح قائمة التنقل"><span></span><span></span><span></span></summary><nav aria-label="التنقل على الجوال"><Link href="/">الرئيسية</Link><Link href="/services">الخدمات</Link><Link href="/#real-work">صور فعلية</Link><Link href="/#work-method">طريقة العمل</Link><Link href="/#about">عن أبو غيث</Link><a href={`tel:${site.phone}`}>اتصل: {site.phoneDisplay}</a></nav></details>
+          <details className="mobile-menu"><summary aria-label="فتح قائمة التنقل"><span></span><span></span><span></span></summary><nav aria-label="التنقل على الجوال"><Link href="/">الرئيسية</Link><Link href="/services">الخدمات</Link><Link href="/blog">المدونة</Link><Link href="/#real-work">صور فعلية</Link><Link href="/#work-method">طريقة العمل</Link><Link href="/#about">عن أبو غيث</Link><a href={`tel:${site.phone}`}>اتصل: {site.phoneDisplay}</a></nav></details>
         </div>
       </header>
     </>
@@ -82,7 +82,7 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <div className="shell footer-grid">
-        <div className="footer-intro"><Brand footer /><p>تفصيل وتركيب أعمال الحدادة والمظلات والسواتر والساندويتش بانل والهياكل المعدنية داخل مدينة الرياض.</p><p className="footer-proof">صور سيارة ومعدات الخدمة المعروضة بالموقع صور فعلية من الميدان.</p></div>
+        <div className="footer-intro"><Brand footer /><p>تفصيل وتركيب أعمال الحدادة والمظلات والسواتر والساندويتش بانل والهياكل المعدنية داخل مدينة الرياض.</p><p className="footer-proof">صور سيارة ومعدات الخدمة المعروضة بالموقع صور فعلية من الميدان.</p><Link className="text-link light-link" href="/blog">مدونة الساندوتش بانل <ArrowIcon /></Link></div>
         <div><h2 className="footer-heading">الخدمات</h2><ul className="footer-links">{services.slice(0, 4).map((s) => <li key={s.slug}><Link href={`/services/${s.slug}`}>{s.label}</Link></li>)}</ul></div>
         <div><h2 className="footer-heading">خدمات إضافية</h2><ul className="footer-links">{services.slice(4).map((s) => <li key={s.slug}><Link href={`/services/${s.slug}`}>{s.label}</Link></li>)}</ul></div>
         <div><h2 className="footer-heading">تواصل الآن</h2><div className="footer-contact"><a href={`tel:${site.phone}`}><PhoneIcon /><span>اتصال مباشر<strong>{site.phoneDisplay}</strong></span></a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><WhatsappIcon /><span>إرسال التفاصيل<strong>عبر واتساب</strong></span></a><a href={site.mapsUrl} target="_blank" rel="noopener noreferrer"><PinIcon /><span>موقع النشاط<strong>{site.address.short}</strong></span></a></div></div>
@@ -100,3 +100,4 @@ export function FloatingActions() {
     </div>
   );
 }
+

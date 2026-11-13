@@ -8,6 +8,7 @@ import { serviceStructuredData } from '@/lib/structured-data';
 import JsonLd from '@/components/JsonLd';
 import ServiceCard from '@/components/ServiceCard';
 import PanelProjectGallery from '@/components/PanelProjectGallery';
+import BlogPreview from '@/components/BlogPreview';
 
 export function generateStaticParams() {
   return services.map(({ slug }) => ({ slug }));
@@ -48,6 +49,7 @@ export default async function ServicePage({ params }) {
       <section className="section faq-section service-faq"><div className="shell faq-grid"><div className="faq-heading"><span className="kicker">أسئلة شائعة</span><h2>أسئلة عن {service.label}</h2><p>توضح هذه الإجابات المعلومات الأساسية قبل اعتماد المقاس ونطاق العمل.</p></div><div className="faq-list">{service.faq.map(([q, a], i) => <details key={q} open={i === 0}><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></div></section>
 
       <section className="section related-section"><div className="shell"><div className="section-heading"><div><span className="kicker">خدمات مرتبطة</span><h2>قد تحتاج أيضًا</h2></div><Link className="text-link" href="/services">عرض جميع الخدمات <ArrowIcon /></Link></div><div className="services-grid related-grid">{related.map((item) => <ServiceCard key={item.slug} service={item} />)}</div></div></section>
+      {['sandwich-panel', 'warehouses-hangars', 'steel-fabrication'].includes(slug) && <BlogPreview service />}
     </main>
   );
 }

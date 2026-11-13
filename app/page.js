@@ -7,6 +7,7 @@ import { homeStructuredData } from '@/lib/structured-data';
 import JsonLd from '@/components/JsonLd';
 import ServiceCard from '@/components/ServiceCard';
 import SandwichPanelFeature from '@/components/SandwichPanelFeature';
+import BlogPreview from '@/components/BlogPreview';
 
 export const metadata = pageMetadata();
 
@@ -86,6 +87,8 @@ export default function HomePage() {
       <section className="local-section" id="location">
         <div className="shell local-card"><div><span className="kicker light">موقع أبو غيث في الرياض</span><h2>موقع فعلي في حي المصيف وخدمة ميدانية لجميع أحياء الرياض.</h2><p>يمكنك فتح نقطة الموقع مباشرة على خرائط Google، ولطلب تنفيذ في موقعك أرسل الحي ونوع الخدمة وصورة واضحة والمقاسات التقريبية.</p></div><div className="local-action location-action"><span>العنوان</span><address>{site.address.full}</address><a href={site.mapsUrl} target="_blank" rel="noopener noreferrer"><PinIcon /> فتح الموقع على خرائط Google</a><small>الهاتف: {site.phoneDisplay}</small></div></div>
       </section>
+
+      <BlogPreview />
 
       <section className="section faq-section">
         <div className="shell faq-grid"><div className="faq-heading"><span className="kicker">أسئلة شائعة</span><h2>قبل إرسال طلبك</h2><p>إجابات مختصرة عن نطاق الخدمة والمقاسات والصور الميدانية.</p></div><div className="faq-list">{homeFaq.map(([q, a], i) => <details key={q} open={i === 0}><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></div>

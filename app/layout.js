@@ -1,6 +1,7 @@
 import './globals.css';
 import './address.css';
 import './enhancements.css';
+import './blog.css';
 import { Header, Footer, FloatingActions } from '@/components/SiteChrome';
 import { site } from '@/lib/site';
 
@@ -51,3 +52,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
