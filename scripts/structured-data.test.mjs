@@ -150,6 +150,7 @@ test('article markup and previews identify the actual business, page, cover and 
     assert.equal(page.mainEntity['@id'], article['@id']);
     assert.equal(article.url, `${site.url}${path}`);
     assert.equal(article.datePublished, post.datePublished);
+    for (const date of [article.datePublished, article.dateModified]) assert.match(date, /T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/);
     assert.ok(Number.isFinite(Date.parse(article.datePublished)));
     assert.ok(Date.parse(article.dateModified) >= Date.parse(article.datePublished));
     assert.equal(image.url, `${site.url}${post.image.src}`);
