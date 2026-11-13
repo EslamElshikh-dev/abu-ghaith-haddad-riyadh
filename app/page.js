@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowIcon, CheckIcon, PhoneIcon, WhatsappIcon, PinIcon, ShieldIcon } from '@/components/SiteChrome';
-import { site, services, realPhotos, homeFaq, whatsappUrl } from '@/lib/site';
+import { site, services, getService, realPhotos, homeFaq, whatsappUrl } from '@/lib/site';
 import { pageMetadata } from '@/lib/metadata';
 import { homeStructuredData } from '@/lib/structured-data';
 import JsonLd from '@/components/JsonLd';
@@ -11,6 +11,7 @@ import SandwichPanelFeature from '@/components/SandwichPanelFeature';
 export const metadata = pageMetadata();
 
 export default function HomePage() {
+  const panelService = getService('sandwich-panel');
   return (
     <main id="main-content">
       <JsonLd id="home-structured-data" data={homeStructuredData()} />
@@ -31,7 +32,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="hero-visual animate-in delay-one">
-            <div className="hero-image-wrap"><Image src="/images/car-shade-riyadh.webp" alt="مظلة سيارات حديدية حديثة في الرياض" fill priority sizes="(max-width: 820px) 100vw, 48vw" /></div>
+            <div className="hero-image-wrap"><Image src={panelService.image} alt={panelService.alt} fill priority sizes="(max-width: 820px) 100vw, 48vw" /></div>
             <div className="steel-lines" aria-hidden="true"></div>
             <div className="hero-stamp"><strong>8</strong><span>خدمات حدادة ومظلات أساسية داخل الرياض</span></div>
           </div>

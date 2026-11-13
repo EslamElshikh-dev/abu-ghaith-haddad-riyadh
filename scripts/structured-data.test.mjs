@@ -106,7 +106,7 @@ test('JSON-LD serialization cannot terminate its script element', () => {
 });
 
 test('all referenced WebP files have complete containers', async () => {
-  const images = new Set([...realPhotos.map((photo) => photo.src), ...services.map((service) => service.image)]);
+  const images = new Set([...realPhotos.map((photo) => photo.src), ...services.map((service) => service.image), ...services.flatMap((service) => (service.projectPhotos || []).map((photo) => photo.src))]);
   for (const image of images) {
     const bytes = await readFile(new URL(`../public${image}`, import.meta.url));
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF', image);
