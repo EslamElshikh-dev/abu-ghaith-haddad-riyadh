@@ -16,13 +16,14 @@ function walk(value, visit) {
 
 test('every page has one consistent business and website identity', () => {
   assert.equal(site.name, 'أبو غيث حداد أبواب ونوافذ وسندوتش بانل');
-  assert.ok(site.description.startsWith(site.name));
+  assert.equal(site.profileName, 'أبو غيث حداد ابواب ونوافذ');
+  assert.ok(site.description.startsWith(site.profileName));
   for (const data of graphs) {
     const businesses = nodesOfType(data, 'HomeAndConstructionBusiness');
     const websites = nodesOfType(data, 'WebSite');
     assert.equal(businesses.length, 1);
     assert.equal(websites.length, 1);
-    assert.equal(businesses[0].name, site.name);
+    assert.equal(businesses[0].name, site.profileName);
     assert.equal(websites[0].name, site.name);
     assert.equal(businesses[0].telephone, site.phone);
     assert.equal(websites[0].publisher['@id'], businesses[0]['@id']);
@@ -81,7 +82,7 @@ test('catalog represents the eight real service pages without fabricated commerc
 
 test('page metadata keeps the site name on shared previews and canonical URLs', () => {
   const home = pageMetadata();
-  assert.deepEqual(home.title, { absolute: site.name });
+  assert.deepEqual(home.title, { absolute: site.homeTitle });
   assert.equal(home.openGraph.siteName, site.name);
   assert.equal(home.openGraph.url, `${site.url}/`);
   for (const service of services) {
@@ -113,3 +114,4 @@ test('all referenced WebP files have complete containers', async () => {
     assert.equal(bytes.readUInt32LE(4) + 8, bytes.length, `Truncated image: ${image}`);
   }
 });
+

@@ -34,7 +34,7 @@ export default async function ServicePage({ params }) {
       </div></section>
 
       <section className="section service-content-section"><div className="shell service-content-grid">
-        <article className="service-article"><span className="kicker">تفاصيل الخدمة</span><h2>{service.label} حسب مساحة الموقع والاستخدام</h2>{service.paragraphs.map((p) => <p key={p}>{p}</p>)}<div className="feature-panel"><h2>ما الذي يشمله التخطيط للتنفيذ؟</h2><ul>{service.benefits.map((benefit) => <li key={benefit}><CheckIcon />{benefit}</li>)}</ul></div></article>
+        <article className="service-article"><span className="kicker">تفاصيل الخدمة</span><h2>{service.label} حسب مساحة الموقع والاستخدام</h2>{service.paragraphs.map((p) => <p key={p}>{p}</p>)}<div className="feature-panel"><h2>ما الذي يشمله التخطيط للتنفيذ؟</h2><ul>{service.benefits.map((benefit) => <li key={benefit}><CheckIcon />{benefit}</li>)}</ul></div>{service.requestChecklist && <div className="feature-panel"><h2>جهّز طلب الساندوتش بانل</h2><p>هذه المعلومات تساعدنا على فهم الموقع وتحديد الخطوة التالية.</p><ul>{service.requestChecklist.map((item) => <li key={item}><CheckIcon />{item}</li>)}</ul></div>}</article>
         <aside className="contact-card"><span>اطلب الخدمة</span><h2>أرسل المقاس أو صورة الموقع</h2><p>اذكر الحي، نوع الخدمة، المقاسات التقريبية، والشكل المطلوب لبدء مناقشة التفاصيل.</p><a className="button button-whatsapp full-button" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><WhatsappIcon className="button-icon" /> واتساب {site.phoneDisplay}</a><a className="button button-dark full-button" href={`tel:${site.phone}`}><PhoneIcon className="button-icon" /> اتصال مباشر</a><a className="service-location-link" href={site.mapsUrl} target="_blank" rel="noopener noreferrer">الموقع: {site.address.short}</a><small>نطاق الخدمة: مدينة الرياض</small></aside>
       </div></section>
 
@@ -48,3 +48,4 @@ export default async function ServicePage({ params }) {
     </main>
   );
 }
+
