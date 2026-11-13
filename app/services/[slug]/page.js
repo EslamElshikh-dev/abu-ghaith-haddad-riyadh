@@ -7,6 +7,7 @@ import { pageMetadata } from '@/lib/metadata';
 import { serviceStructuredData } from '@/lib/structured-data';
 import JsonLd from '@/components/JsonLd';
 import ServiceCard from '@/components/ServiceCard';
+import PanelProjectGallery from '@/components/PanelProjectGallery';
 
 export function generateStaticParams() {
   return services.map(({ slug }) => ({ slug }));
@@ -32,6 +33,8 @@ export default async function ServicePage({ params }) {
         <div className="service-hero-copy"><nav className="breadcrumbs" aria-label="مسار التنقل"><Link href="/">الرئيسية</Link><span>/</span><Link href="/services">الخدمات</Link><span>/</span><strong aria-current="page">{service.label}</strong></nav><span className="kicker light">خدمة داخل مدينة الرياض</span><h1>{service.title}</h1><p>{service.intro}</p><div className="hero-actions"><a className="button button-primary" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><WhatsappIcon className="button-icon" /> أرسل صورة الموقع</a><a className="button button-outline-light" href={`tel:${site.phone}`}><PhoneIcon className="button-icon" /> اتصال مباشر</a></div></div>
         <div className="service-hero-image"><Image src={service.image} alt={service.alt} fill priority sizes="(max-width: 900px) 100vw, 48vw" /></div>
       </div></section>
+
+      <PanelProjectGallery photos={service.projectPhotos} />
 
       <section className="section service-content-section"><div className="shell service-content-grid">
         <article className="service-article"><span className="kicker">تفاصيل الخدمة</span><h2>{service.label} حسب مساحة الموقع والاستخدام</h2>{service.paragraphs.map((p) => <p key={p}>{p}</p>)}<div className="feature-panel"><h2>ما الذي يشمله التخطيط للتنفيذ؟</h2><ul>{service.benefits.map((benefit) => <li key={benefit}><CheckIcon />{benefit}</li>)}</ul></div>{service.requestChecklist && <div className="feature-panel"><h2>جهّز طلب الساندوتش بانل</h2><p>هذه المعلومات تساعدنا على فهم الموقع وتحديد الخطوة التالية.</p><ul>{service.requestChecklist.map((item) => <li key={item}><CheckIcon />{item}</li>)}</ul></div>}</article>
