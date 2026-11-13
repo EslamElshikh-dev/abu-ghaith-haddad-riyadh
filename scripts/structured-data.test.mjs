@@ -2,10 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { site, services, realPhotos } from '../lib/site.js';
-import { pageMetadata } from '../lib/metadata.js';
-import { homeStructuredData, servicesStructuredData, serviceStructuredData, serializeJsonLd, ids } from '../lib/structured-data.js';
+import { pageMetadata, blogMetadata } from '../lib/metadata.js';
+import { blogPosts, getRelatedPosts, blogWhatsappUrl } from '../lib/blog.js';
+import { homeStructuredData, servicesStructuredData, serviceStructuredData, blogStructuredData, blogPostStructuredData, serializeJsonLd, ids } from '../lib/structured-data.js';
 
-const graphs = [homeStructuredData(), servicesStructuredData(), ...services.map(serviceStructuredData)];
+const graphs = [homeStructuredData(), servicesStructuredData(), ...services.map(serviceStructuredData), blogStructuredData(), ...blogPosts.map(blogPostStructuredData)];
 const nodesOfType = (data, type) => data['@graph'].filter((node) => [].concat(node['@type']).includes(type));
 
 function walk(value, visit) {
@@ -106,12 +107,59 @@ test('JSON-LD serialization cannot terminate its script element', () => {
 });
 
 test('all referenced WebP files have complete containers', async () => {
-  const images = new Set([...realPhotos.map((photo) => photo.src), ...services.map((service) => service.image), ...services.flatMap((service) => (service.projectPhotos || []).map((photo) => photo.src))]);
+  const images = new Set([...realPhotos.map((photo) => photo.src), ...services.map((service) => service.image), ...services.flatMap((service) => (service.projectPhotos || []).map((photo) => photo.src)), ...blogPosts.map((post) => post.image.src)]);
   for (const image of images) {
     const bytes = await readFile(new URL(`../public${image}`, import.meta.url));
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF', image);
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP', image);
     assert.equal(bytes.readUInt32LE(4) + 8, bytes.length, `Truncated image: ${image}`);
+  }
+});
+
+test('five discoverable blog articles have unique identities and valid navigation targets', () => {
+  assert.equal(blogPosts.length, 5);
+  for (const key of ['slug', 'title', 'description']) assert.equal(new Set(blogPosts.map((post) => post[key])).size, 5);
+  const list = nodesOfType(blogStructuredData(), 'ItemList')[0];
+  assert.equal(list.numberOfItems, 5);
+  assert.deepEqual(list.itemListElement.map((item) => item.url), blogPosts.map((post) => `${site.url}/blog/${post.slug}`));
+  for (const post of blogPosts) {
+    assert.match(post.slug, /^[a-z0-9-]+$/);
+    assert.ok(post.wordCount > 450, post.slug);
+    assert.equal(new Set(post.sections.map((section) => section.id)).size, post.sections.length);
+    assert.equal(getRelatedPosts(post).length, 2);
+    assert.ok(getRelatedPosts(post).every((item) => item.slug !== post.slug));
+    const contact = new URL(blogWhatsappUrl(post));
+    assert.equal(contact.hostname, 'wa.me');
+    assert.equal(contact.pathname, `/${site.whatsapp}`);
+    assert.ok(contact.searchParams.get('text').includes(post.title));
+  }
+});
+
+test('article markup and previews identify the actual business, page, cover and publication date', () => {
+  for (const post of blogPosts) {
+    const data = blogPostStructuredData(post);
+    const article = nodesOfType(data, 'BlogPosting')[0];
+    const page = nodesOfType(data, 'WebPage')[0];
+    const image = data['@graph'].find((node) => node['@id'] === article.image['@id']);
+    const metadata = blogMetadata(post);
+    const path = `/blog/${post.slug}`;
+    assert.equal(article.headline, post.title);
+    assert.equal(article.author['@id'], ids.business);
+    assert.equal(article.publisher['@id'], ids.business);
+    assert.equal(article.mainEntityOfPage['@id'], page['@id']);
+    assert.equal(page.mainEntity['@id'], article['@id']);
+    assert.equal(article.url, `${site.url}${path}`);
+    assert.equal(article.datePublished, post.datePublished);
+    assert.ok(Number.isFinite(Date.parse(article.datePublished)));
+    assert.ok(Date.parse(article.dateModified) >= Date.parse(article.datePublished));
+    assert.equal(image.url, `${site.url}${post.image.src}`);
+    assert.ok(image.width >= 1200 && image.height > 600);
+    assert.equal(metadata.alternates.canonical, path);
+    assert.equal(metadata.openGraph.type, 'article');
+    assert.equal(metadata.openGraph.publishedTime, article.datePublished);
+    assert.equal(metadata.openGraph.images[0].url, image.url);
+    assert.equal(nodesOfType(data, 'HomeAndConstructionBusiness')[0].sameAs[0], site.profileUrl);
+    assert.deepEqual(nodesOfType(data, 'BreadcrumbList')[0].itemListElement.map((item) => item.item), [`${site.url}/`, `${site.url}/blog`, article.url]);
   }
 });
 
